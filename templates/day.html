@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks for {{ day }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Tasks for {{ day }}</h1>
+
+<form method="POST" class="d-flex justify-content-center mb-4">
+  {% csrf_token %} {# IMPORTANT for security #}
+  <input type="text" name="task" class="form-control me-2" placeholder="Add new task" required style="max-width: 300px;">
+  <button type="submit" class="btn btn-primary">Add Task</button>
+</form>
+
+<ul class="list-group" style="max-width: 500px; margin: 0 auto;">
+  {% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span>{{ task.task_text }}</span>
+
+      <div class="d-flex align-items-center"> {# Added a div to group checkbox and delete button #}
+        {# Form for marking task as done/undone #}
+        <form method="POST" style="display:inline-block; margin-right: 10px;"> {# Use inline-block to keep on same line #}
+          {% csrf_token %}
+          <input type="hidden" name="task_id" value="{{ task.id }}"> {# Pass task ID to identify which task to update #}
+          <input type="checkbox" name="toggle_done" onchange="this.form.submit()" {% if task.done %}checked{% endif %} />
+        </form>
+
+        {# Form for deleting task #}
+        <form method="POST" style="display:inline-block;">
+          {% csrf_token %}
+          <input type="hidden" name="delete_task_id" value="{{ task.id }}"> {# Pass task ID for deletion #}
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </div>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No tasks yet for {{ day }}.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'landingPage' %}" class="btn btn-secondary mt-4">Back to Weekly View</a>
+{% endblock %}

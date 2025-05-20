@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Weekly Task Manager{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #007bff; /* Bootstrap primary blue */
+      --secondary-color: #6c757d; /* Bootstrap secondary grey */
+      --success-color: #28a745; /* Bootstrap success green */
+      --danger-color: #dc3545; /* Bootstrap danger red */
+      --light-bg: #f8f9fa; /* Lighter background */
+      --medium-bg: #e9ecef; /* Slightly darker background */
+      --dark-text: #212529; /* Dark text color */
+      --light-text: #f8f9fa; /* Light text color */
+      --card-bg: #ffffff; /* White card background */
+      --border-color: #dee2e6; /* Light border color */
+    }
+
+    body {
+      background-color: var(--medium-bg); /* Use new background variable */
+      font-family: 'Inter', Arial, sans-serif; /* Apply Inter font */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-text); /* Apply dark text color */
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px 15px; /* Add some padding to the container */
+      max-width: 960px; /* Limit container width for better readability */
+    }
+
+    h1 {
+      font-weight: 700; /* Bolder font weight */
+      font-size: 3rem; /* Slightly larger heading */
+      margin-bottom: 50px; /* More space below heading */
+      color: var(--dark-text);
+      letter-spacing: -0.02em; /* Slight letter spacing adjustment */
+    }
+
+    /* Day Card Styling */
+    .day-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color); /* Lighter border */
+      border-radius: 12px; /* Slightly more rounded corners */
+      padding: 25px; /* More padding */
+      font-size: 1.2rem; /* Slightly larger font */
+      font-weight: 600; /* Medium bold */
+      min-width: 140px; /* Slightly wider cards */
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08); /* More pronounced but soft shadow */
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition */
+      cursor: pointer; /* Indicate clickable */
+      height: 100%; /* Ensure cards in a row have equal height */
+      display: flex; /* Use flexbox for vertical centering of content */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .day-card:hover {
+      transform: translateY(-8px); /* More pronounced lift on hover */
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15); /* Stronger shadow on hover */
+    }
+
+    /* Link Styling for cards */
+    .day-card a {
+      text-decoration: none;
+      color: var(--dark-text); /* Inherit dark text color */
+      display: block; /* Make the entire card clickable */
+      width: 100%; /* Ensure link fills card */
+      height: 100%; /* Ensure link fills card */
+    }
+
+    /* General link styling */
+    a {
+      color: var(--primary-color); /* Default link color */
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* List Group Item Styling */
+    .list-group-item {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px; /* Slightly rounded corners */
+      margin-bottom: 10px; /* Space between list items */
+      padding: 15px 20px; /* More padding */
+      font-size: 1.1rem;
+      font-weight: 400;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow for tasks */
+      transition: background-color 0.1s ease-in-out;
+    }
+
+    .list-group-item:hover {
+      background-color: var(--light-bg); /* Slightly lighter background on hover */
+    }
+
+    .list-group-item span {
+        flex-grow: 1; /* Allow text to take available space */
+        text-align: left; /* Align task text to the left */
+        margin-right: 15px; /* Space between text and controls */
+        word-break: break-word; /* Prevent long words from overflowing */
+    }
+
+    /* Styles for completed tasks */
+    .list-group-item input[type="checkbox"]:checked + span {
+      text-decoration: line-through;
+      color: var(--secondary-color);
+    }
+    
+    .list-group-item input[type="checkbox"] {
+        transform: scale(1.3); /* Make checkbox slightly larger */
+        margin-right: 15px; /* Space between checkbox and delete button */
+        cursor: pointer;
+    }
+
+    /* Form input styling */
+    .form-control {
+      border-radius: 8px;
+      padding: 10px 15px;
+      border: 1px solid var(--border-color);
+    }
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Button styling */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+      border-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 600;
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268; /* Darker grey on hover */
+      border-color: #5a6268;
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      border-color: var(--danger-color);
+      border-radius: 6px; /* Slightly smaller border-radius for small buttons */
+      padding: 5px 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    }
+    .btn-danger:hover {
+      background-color: #bd2130; /* Darker red on hover */
+      border-color: #bd2130;
+    }
+
+    /* Flex adjustments for task items */
+    .list-group-item .d-flex {
+        align-items: center;
+    }
+    .list-group-item .d-flex form {
+        margin-right: 0; /* Remove default margin */
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+      }
+      .day-card {
+        padding: 20px;
+        font-size: 1.1rem;
+        min-width: unset; /* Allow cards to resize */
+      }
+      .list-group {
+        max-width: 100%; /* Full width on smaller screens */
+      }
+      .form-control {
+        max-width: 100%; /* Full width for input */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

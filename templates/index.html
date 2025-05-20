@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Weekly Task Manager{% endblock %}
+
+{% block content %}
+<h1>Weekly Task Manager</h1>
+
+<div class="row justify-content-center mb-4">
+  {% for list in days|slice:":4" %}
+    <div class="col-md-2 col-4 mb-3">
+      <div class="day-card">
+        <a href="{% url 'day' list.slug %}">{{ list.day }}</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="row justify-content-center">
+  {% for list in days|slice:"4:" %}
+    <div class="col-md-2 col-4 mb-3">
+      <div class="day-card">
+        <a href="{% url 'day' list.slug %}">{{ list.day }}</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+*.env
+.idea/ # If you use PyCharm or IntelliJ
+.vscode/ # If you use VS Code (optional, you might want to share some settings)
+*.sqlite3 # Your SQLite database file
+*.log
+local_settings.py # If you have a separate local settings file
+.DS_Store # macOS files
+
+# Django specific
+media/ # User-uploaded files
+static_root/ # Collected static files
+
+# Virtual environment
+.venv/
