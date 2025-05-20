@@ -1,6 +1,6 @@
 # Weekly Task Manager
 
-A simple yet elegant Django web application designed to help you organize your daily tasks for each day of the week. Add new tasks, mark them as completed, or delete them when they're no longer needed.
+Week 3 task for Super 100 Training Classes
 
 ## ✨ Features
 
