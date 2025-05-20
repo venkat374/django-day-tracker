@@ -17,7 +17,6 @@ Week 3 task for Super 100 Training Classes
 * **Django 5.2.1**
 * **SQLite3** (for local development database)
 * **Bootstrap 5** (for responsive styling)
-* **Google Fonts (Inter)**
 
 ## 🖥️ Local Development Setup
 
